@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c5bumumx54mtm"]
+
+[ext_resource type="Script" uid="uid://rysw7pelcidh" path="res://scenes/objects/cave_entrance.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b8r70appkoy6y" path="res://graphics/objects/cave.png" id="2_ji3a3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cave"]
+size = Vector2(32, 29)
+
+[node name="CaveEntrance" type="StaticBody2D" unique_id=1622124972]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_script")
+
+[node name="Cave" type="Sprite2D" parent="." unique_id=2050157226]
+position = Vector2(8.812494, 8.562509)
+scale = Vector2(0.02362061, 0.022888174)
+texture = ExtResource("2_ji3a3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2096965471]
+position = Vector2(10, 8.5)
+shape = SubResource("RectangleShape2D_cave")

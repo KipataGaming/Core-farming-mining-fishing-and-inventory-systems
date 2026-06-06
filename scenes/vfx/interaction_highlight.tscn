@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://interaction_highlight"]
+
+[ext_resource type="Script" uid="uid://highlight_script_uid" path="res://scenes/vfx/interaction_highlight.gd" id="1_script"]
+
+[node name="InteractionHighlight" type="Node2D"]
+script = ExtResource("1_script")

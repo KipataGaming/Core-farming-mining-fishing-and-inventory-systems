@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://qmmklon88gkv"]
+
+[ext_resource type="Script" uid="uid://byqlrari620v2" path="res://scenes/objects/mining_object.gd" id="1_0tnsm"]
+[ext_resource type="PackedScene" uid="uid://b1a4cl0kv3lpw" path="res://scenes/vfx/flash_sprite_2d.tscn" id="2_bq2u4"]
+[ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="3_1kg5r"]
+[ext_resource type="Texture2D" uid="uid://bxsysay51a72s" path="res://graphics/tilesets/decoration.png" id="4_v1u0r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0tnsm"]
+resource_local_to_scene = true
+shader = ExtResource("3_1kg5r")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mining"]
+radius = 6.0
+
+[node name="MiningObject" type="StaticBody2D" unique_id=889007782 groups=["MiningObjects"]]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_0tnsm")
+
+[node name="FlashSprite2D" parent="." unique_id=1802940249 instance=ExtResource("2_bq2u4")]
+material = SubResource("ShaderMaterial_0tnsm")
+texture = ExtResource("4_v1u0r")
+hframes = 4
+vframes = 2
+frame = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1673563494]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_mining")

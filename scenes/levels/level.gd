@@ -54,25 +54,18 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 			if not grid_coord in $Layers/GrassLayer.get_used_cells():
 				$Objects/Player.start_fishing()
 		Enum.Tool.SEED:
-			var seed_type = player.current_seed
+			var seed_item = player.current_seed # Note: Player.current_seed holds an Enum.Seed
 			
-			# Check if it's a fruit seed
-			var fruit_seed_map = {
-				Enum.Seed.ORANGE: Enum.Item.ORANGE_FRUIT,
-				Enum.Seed.LEMON: Enum.Item.LEMON_FRUIT,
-				Enum.Seed.LIME: Enum.Item.LIME_FRUIT,
-				Enum.Seed.BANANA: Enum.Item.BANANA_FRUIT,
-				Enum.Seed.PEAR: Enum.Item.PEAR_FRUIT,
-				Enum.Seed.APRICOT: Enum.Item.APRICOT_FRUIT,
-				Enum.Seed.MANGO: Enum.Item.MANGO_FRUIT,
-				Enum.Seed.GUAVA: Enum.Item.GUAVA_FRUIT,
-			}
+			# Map the active Seed enum to the tree's seed_type
+			# The player.current_seed already IS an Enum.Seed (e.g., Enum.Seed.ORANGE)
 			
-			if fruit_seed_map.has(seed_type):
+			var is_tree_seed = seed_item in [Enum.Seed.ORANGE, Enum.Seed.LEMON, Enum.Seed.LIME, Enum.Seed.BANANA, Enum.Seed.PEAR, Enum.Seed.APRICOT, Enum.Seed.MANGO, Enum.Seed.GUAVA]
+			
+			if is_tree_seed:
 				var tree = preload("res://scenes/objects/tree.tscn").instantiate()
 				tree.position = Vector2(grid_coord * Data.TILE_SIZE)
-				tree.seed_type = seed_type # Assign before adding to tree
-				$Objects.add_child(tree) # _ready() runs here, seed_type is already set
+				tree.seed_type = seed_item
+				$Objects.add_child(tree)
 			elif has_soil and grid_coord not in used_cells:
 				# Plant crop
 				var item_mapping = {
@@ -81,11 +74,18 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 					Enum.Seed.CORN: Enum.Item.CORN,
 					Enum.Seed.PUMPKIN: Enum.Item.PUMPKIN,
 				}
-				var selected_item = item_mapping.get(seed_type)
+				# Need to map Enum.Seed to Enum.Item for plant setup
+				var seed_to_item = {
+					Enum.Seed.TOMATO: Enum.Item.TOMATO,
+					Enum.Seed.WHEAT: Enum.Item.WHEAT,
+					Enum.Seed.CORN: Enum.Item.CORN,
+					Enum.Seed.PUMPKIN: Enum.Item.PUMPKIN
+				}
+				var selected_item = seed_to_item.get(seed_item)
 				
 				if selected_item != null and Data.items[selected_item] > 0:
 					var plant_res = PlantResource.new()
-					plant_res.setup(seed_type, selected_item)
+					plant_res.setup(seed_item, selected_item)
 					var plant = plant_scene.instantiate()
 					plant.setup(grid_coord, $Objects, plant_res, plant_death)
 					used_cells.append(grid_coord)

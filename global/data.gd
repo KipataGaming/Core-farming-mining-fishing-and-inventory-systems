@@ -61,15 +61,16 @@ const MACHINE_UPGRADE_COST = {
 		'color': Color.BURLYWOOD}}
 
 const FISH_DATA = {
-	Enum.Item.SUNFISH: {"name": "Sunfish", "rarity": 0.8, "difficulty": 1, "icon": preload("res://graphics/icons/goldfish.png")},
-	Enum.Item.CRAPPIE: {"name": "Crappie", "rarity": 0.7, "difficulty": 2, "icon": preload("res://graphics/icons/silverfish.png")},
-	Enum.Item.SMALLMOUTH_BASS: {"name": "Smallmouth Bass", "rarity": 0.5, "difficulty": 3, "icon": preload("res://graphics/icons/fish.png")},
-	Enum.Item.LARGEMOUTH_BASS: {"name": "Largemouth Bass", "rarity": 0.5, "difficulty": 3, "icon": preload("res://graphics/icons/fish.png")},
-	Enum.Item.PIKE: {"name": "Pike", "rarity": 0.3, "difficulty": 4, "icon": preload("res://graphics/icons/goldfish.png")},
-	Enum.Item.MUSKIE: {"name": "Muskie", "rarity": 0.1, "difficulty": 5, "icon": preload("res://graphics/icons/silverfish.png")},
-	Enum.Item.CATFISH: {"name": "Catfish", "rarity": 0.6, "difficulty": 2, "icon": preload("res://graphics/icons/fish.png")},
-	Enum.Item.CARP: {"name": "Carp", "rarity": 0.4, "difficulty": 2, "icon": preload("res://graphics/icons/silverfish.png")},
+	Enum.Item.SUNFISH: {"name": "Sunfish", "rarity": 0.8, "difficulty": 1, "icon": preload("res://graphics/icons/sunfish.png")},
+	Enum.Item.CRAPPIE: {"name": "Crappie", "rarity": 0.7, "difficulty": 2, "icon": preload("res://graphics/icons/crappie.png")},
+	Enum.Item.SMALLMOUTH_BASS: {"name": "Smallmouth Bass", "rarity": 0.5, "difficulty": 3, "icon": preload("res://graphics/icons/smallmouthbass.png")},
+	Enum.Item.LARGEMOUTH_BASS: {"name": "Largemouth Bass", "rarity": 0.5, "difficulty": 3, "icon": preload("res://graphics/icons/bigmouthbass.png")},
+	Enum.Item.PIKE: {"name": "Pike", "rarity": 0.3, "difficulty": 4, "icon": preload("res://graphics/icons/pike.png")},
+	Enum.Item.MUSKIE: {"name": "Muskie", "rarity": 0.1, "difficulty": 5, "icon": preload("res://graphics/icons/muskie.png")},
+	Enum.Item.CATFISH: {"name": "Catfish", "rarity": 0.6, "difficulty": 2, "icon": preload("res://graphics/icons/catfish.png")},
+	Enum.Item.CARP: {"name": "Carp", "rarity": 0.4, "difficulty": 2, "icon": preload("res://graphics/icons/carp.png")},
 }
+
 
 
 const HOUSE_COST = {
@@ -151,7 +152,15 @@ var items = {
 	Enum.Item.PEAR_FRUIT: 0,
 	Enum.Item.APRICOT_FRUIT: 0,
 	Enum.Item.MANGO_FRUIT: 0,
-	Enum.Item.GUAVA_FRUIT: 0}
+	Enum.Item.GUAVA_FRUIT: 0,
+	Enum.Item.ORANGE_SEED: 0,
+	Enum.Item.LEMON_SEED: 0,
+	Enum.Item.LIME_SEED: 0,
+	Enum.Item.BANANA_SEED: 0,
+	Enum.Item.PEAR_SEED: 0,
+	Enum.Item.APRICOT_SEED: 0,
+	Enum.Item.MANGO_SEED: 0,
+	Enum.Item.GUAVA_SEED: 0}
 # Player Status & Time Cycle Variables
 var health: float = 100.0
 var max_health: float = 100.0
@@ -180,6 +189,14 @@ const ITEM_DISPLAY_DATA = {
 	Enum.Item.APRICOT_FRUIT: {"color": Color.ORANGE_RED, "frame": 0},
 	Enum.Item.MANGO_FRUIT: {"color": Color.DARK_ORANGE, "frame": 0},
 	Enum.Item.GUAVA_FRUIT: {"color": Color.LIGHT_GREEN, "frame": 0},
+	Enum.Item.ORANGE_SEED: {"color": Color.ORANGE, "frame": 0},
+	Enum.Item.LEMON_SEED: {"color": Color.YELLOW, "frame": 0},
+	Enum.Item.LIME_SEED: {"color": Color.GREEN, "frame": 0},
+	Enum.Item.BANANA_SEED: {"color": Color.YELLOW, "frame": 0},
+	Enum.Item.PEAR_SEED: {"color": Color.CHARTREUSE, "frame": 0},
+	Enum.Item.APRICOT_SEED: {"color": Color.ORANGE_RED, "frame": 0},
+	Enum.Item.MANGO_SEED: {"color": Color.DARK_ORANGE, "frame": 0},
+	Enum.Item.GUAVA_SEED: {"color": Color.LIGHT_GREEN, "frame": 0},
 	Enum.Item.WOOD: {"color": Color.BROWN, "frame": 0},
 	Enum.Item.APPLE: {"color": Color.RED, "frame": 0},
 	Enum.Item.FISH: {"color": Color.CYAN, "frame": 0},
@@ -273,14 +290,14 @@ func reset_game():
 	items[Enum.Item.WHEAT] = 5
 	items[Enum.Item.PUMPKIN] = 7
 	items[Enum.Item.TOMATO] = 4
-	items[Enum.Item.ORANGE_FRUIT] = 5
-	items[Enum.Item.LEMON_FRUIT] = 5
-	items[Enum.Item.LIME_FRUIT] = 5
-	items[Enum.Item.BANANA_FRUIT] = 5
-	items[Enum.Item.PEAR_FRUIT] = 5
-	items[Enum.Item.APRICOT_FRUIT] = 5
-	items[Enum.Item.MANGO_FRUIT] = 5
-	items[Enum.Item.GUAVA_FRUIT] = 5
+	items[Enum.Item.ORANGE_SEED] = 5
+	items[Enum.Item.LEMON_SEED] = 5
+	items[Enum.Item.LIME_SEED] = 5
+	items[Enum.Item.BANANA_SEED] = 5
+	items[Enum.Item.PEAR_SEED] = 5
+	items[Enum.Item.APRICOT_SEED] = 5
+	items[Enum.Item.MANGO_SEED] = 5
+	items[Enum.Item.GUAVA_SEED] = 5
 	
 	# Reset stats
 	day = 1

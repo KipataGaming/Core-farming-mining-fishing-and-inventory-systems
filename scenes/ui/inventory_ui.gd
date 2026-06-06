@@ -19,21 +19,6 @@ const ITEM_CONFIG = {
 	Enum.Item.WHEAT: {"color": Color.TAN, "frame": 0},
 }
 
-const ICON_OVERRIDES = {
-	Enum.Item.STONE: "grayfish.png",
-	Enum.Item.GOLD: "goldfish.png",
-	Enum.Item.SILVER: "silverfish.png",
-	Enum.Item.FISH: "goldfish.png",
-	Enum.Item.SUNFISH: "goldfish.png",
-	Enum.Item.CRAPPIE: "silverfish.png",
-	Enum.Item.SMALLMOUTH_BASS: "grayfish.png",
-	Enum.Item.LARGEMOUTH_BASS: "grayfish.png",
-	Enum.Item.PIKE: "goldfish.png",
-	Enum.Item.MUSKIE: "silverfish.png",
-	Enum.Item.CATFISH: "grayfish.png",
-	Enum.Item.CARP: "silverfish.png",
-}
-
 @onready var tab_container = $Panel/TabContainer
 @onready var general_grid = $Panel/TabContainer/General/GridContainer
 @onready var ores_grid = $Panel/TabContainer/Ores/GridContainer
@@ -86,18 +71,18 @@ func get_item_icon_config(item: Enum.Item) -> Dictionary:
 		return {"icon": create_icon(config.get("frame", 5)), "color": config.get("color", Color.WHITE)}
 		
 	# 3. Check for Procedural Seeds/Fruits
-	if item in [Enum.Item.TOMATO, Enum.Item.CORN, Enum.Item.PUMPKIN, Enum.Item.WHEAT, Enum.Item.ORANGE_FRUIT, Enum.Item.LEMON_FRUIT, Enum.Item.LIME_FRUIT, Enum.Item.BANANA_FRUIT, Enum.Item.PEAR_FRUIT, Enum.Item.APRICOT_FRUIT, Enum.Item.MANGO_FRUIT, Enum.Item.GUAVA_FRUIT]:
+	if item in [Enum.Item.TOMATO, Enum.Item.CORN, Enum.Item.PUMPKIN, Enum.Item.WHEAT, Enum.Item.ORANGE_SEED, Enum.Item.LEMON_SEED, Enum.Item.LIME_SEED, Enum.Item.BANANA_SEED, Enum.Item.PEAR_SEED, Enum.Item.APRICOT_SEED, Enum.Item.MANGO_SEED, Enum.Item.GUAVA_SEED]:
 		var config = Data.ITEM_DISPLAY_DATA.get(item, {"color": Color.WHITE, "frame": 0})
 		return {"icon": create_dot_icon(config.get("color", Color.WHITE)), "color": Color.WHITE}
 		
 	# 4. Check for general File-based icons (with explicit override check)
-	var icon_filename = ICON_OVERRIDES.get(item, Enum.Item.keys()[item].to_lower().replace("_fruit", "") + ".png")
-	var icon_path = "res://graphics/icons/" + icon_filename
+	var icon_name = Enum.Item.keys()[item].to_lower().replace("_fruit", "").replace("_seed", "").replace("largemouth_bass", "bigmouthbass").replace("_", "")
+	var icon_path = "res://graphics/icons/" + icon_name + ".png"
 	if ResourceLoader.exists(icon_path):
 		return {"icon": load(icon_path), "color": Color.WHITE}
 		
 	# 5. Default Fallback
-	return {"icon": preload("res://graphics/icons/wood.png"), "color": Color.WHITE}
+	return {"icon": preload("res://graphics/icons/apple.png"), "color": Color.WHITE}
 
 func update_inventory() -> void:
 	for child in general_grid.get_children(): child.queue_free()
@@ -115,7 +100,7 @@ func update_inventory() -> void:
 			
 			if item in [Enum.Item.STONE, Enum.Item.IRON, Enum.Item.GOLD, Enum.Item.SILVER, Enum.Item.PLATINUM, Enum.Item.DIAMOND, Enum.Item.RUBY, Enum.Item.SAPPHIRE, Enum.Item.EMERALD]:
 				ores_grid.add_child(resource_texture)
-			elif item in [Enum.Item.TOMATO, Enum.Item.CORN, Enum.Item.PUMPKIN, Enum.Item.WHEAT, Enum.Item.ORANGE_FRUIT, Enum.Item.LEMON_FRUIT, Enum.Item.LIME_FRUIT, Enum.Item.BANANA_FRUIT, Enum.Item.PEAR_FRUIT, Enum.Item.APRICOT_FRUIT, Enum.Item.MANGO_FRUIT, Enum.Item.GUAVA_FRUIT]:
+			elif item in [Enum.Item.TOMATO, Enum.Item.CORN, Enum.Item.PUMPKIN, Enum.Item.WHEAT, Enum.Item.ORANGE_SEED, Enum.Item.LEMON_SEED, Enum.Item.LIME_SEED, Enum.Item.BANANA_SEED, Enum.Item.PEAR_SEED, Enum.Item.APRICOT_SEED, Enum.Item.MANGO_SEED, Enum.Item.GUAVA_SEED]:
 				seeds_grid.add_child(resource_texture)
 				resource_texture.clicked.connect(_on_seed_selected)
 			else:
@@ -127,14 +112,14 @@ func _on_seed_selected(seed_item: Enum.Item) -> void:
 		Enum.Item.CORN: Enum.Seed.CORN,
 		Enum.Item.PUMPKIN: Enum.Seed.PUMPKIN,
 		Enum.Item.WHEAT: Enum.Seed.WHEAT,
-		Enum.Item.ORANGE_FRUIT: Enum.Seed.ORANGE,
-		Enum.Item.LEMON_FRUIT: Enum.Seed.LEMON,
-		Enum.Item.LIME_FRUIT: Enum.Seed.LIME,
-		Enum.Item.BANANA_FRUIT: Enum.Seed.BANANA,
-		Enum.Item.PEAR_FRUIT: Enum.Seed.PEAR,
-		Enum.Item.APRICOT_FRUIT: Enum.Seed.APRICOT,
-		Enum.Item.MANGO_FRUIT: Enum.Seed.MANGO,
-		Enum.Item.GUAVA_FRUIT: Enum.Seed.GUAVA,
+		Enum.Item.ORANGE_SEED: Enum.Seed.ORANGE,
+		Enum.Item.LEMON_SEED: Enum.Seed.LEMON,
+		Enum.Item.LIME_SEED: Enum.Seed.LIME,
+		Enum.Item.BANANA_SEED: Enum.Seed.BANANA,
+		Enum.Item.PEAR_SEED: Enum.Seed.PEAR,
+		Enum.Item.APRICOT_SEED: Enum.Seed.APRICOT,
+		Enum.Item.MANGO_SEED: Enum.Seed.MANGO,
+		Enum.Item.GUAVA_SEED: Enum.Seed.GUAVA,
 	}
 	
 	if item_to_seed_map.has(seed_item):
